@@ -18,7 +18,8 @@ export class RecipeDetailComponent {
 
   constructor(private shoppingListService: ShoppingListService,
     private recipeService: RecipeService,
-    private route: ActivatedRoute)
+    private route: ActivatedRoute,
+    private router: Router)
   { }
 
   onShoppingListClicked(){
@@ -30,8 +31,13 @@ export class RecipeDetailComponent {
       this.id = +params['id'];
       this.receivedRecipe = this.recipeService.getRecipeById(this.id);
     });
-
   }
 
- 
+  onDelete() {
+    if(confirm("Are you sure you want to delete this recipe?")) {
+      this.recipeService.deleteRecipe(this.id);
+      this.router.navigate(['/recipes']);
+    }
+    return;
+  }
 }
